@@ -22,20 +22,31 @@
         <img src="<%= blog.createdBy.profileImageURL %>" width="30px"> <%= blog.createdBy.fullName %>
     </div>
 
-    <div class="container mt-3 ">
-        <h2>Comments</h2>
+    <div class="container mt-3 " id="comment">
+        <h2>Comments (<%= comments.length %>)</h2>
+        
         <% if (locals.user) { %>
          
-            <form action="/blog" method="post" enctype="multipart/form-data">
+            <form action="/blog/comment/<%= blog._id %>" method="post" >
                 <div class="mt-3">
                     
                     <input type="text" class="form-control"  name="content" placeholder="Enter your comment...">
-                    <button class="btn btn-sm btn-primary" type="submit">Add</button>
+                    <button class="btn btn-sm btn-primary mt-1" type="submit">Add</button>
                 </div>
     
                 
             </form>
+            
         <% } %>
+        <div class="mt-3">
+                <% comments.forEach(comment => { %>
+                    <div>
+                        <img src="<%= comment.createdBy.profileImageURL %>" width="30px"/> 
+                        <%= comment.createdBy.fullName %>:
+                        <pre><%= comment.content%></pre>
+                    </div>
+                <% }) %>
+        </div>
     </div>
     <%-include('scripts')%>
 </body>
